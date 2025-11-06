@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      SS TEAM 30S MOD
+    </title>
+    <style>
+      * { margin:0; padding:0; box-sizing:border constraining; }
+  html, body { height:100%; width:100%; overflow:hidden; background:#000; }
+  
+  iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+    z-index: 1;
+  }
+  
+  /* সিগন্যাল বক্স */
+  .signalBox {
+    width: 210px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7), 0 0 15px rgba(0, 255, 255, 0.3);
+    padding: 12px;
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    z-index: 9999;
+    cursor: move;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    text-align: center;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    pointer-events: auto;
+  }
+  
+  .header {font-size:15px; color:#0ff; text-shadow:0 0 8px #0ff; margin-bottom:4px; font-weight:bold;}
+  .subheader {font-size:13px; color:#f0f; text-shadow:0 0 6px #f0f; margin-bottom:8px;}
+  .clock {font-size:13px; color:#0ff; margin:6px 0;}
+  .remaining {font-size:13px; color:#ff0; margin:6px 0; font-weight:bold;}
+  
+  .result {
+    font-size: 16px;
+    margin: 12px 0;
+    font-weight: bold;
+  }
+  .result-text { color: #ccc; font-weight: normal; }
+  .signal {
+    font-size: 18px;
+    text-shadow: 0 0 8px;
+  }
+  .signal.BIG { color: #ff3333; text-shadow: 0 0 8px #f00; }
+  .signal.SMALL { color: #3399ff; text-shadow: 0 0 8px #00f; }
+  
+  .number-box {
+    width: 85px; height: 45px; margin: 12px auto; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: bold; color: #fff; box-shadow: 0 0 15px;
+    gap: 10px; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .green  {background:#0c0; box-shadow:0 0 15px #0f0;}
+  .red    {background:#c00; box-shadow:0 0 15px #f00;}
+  .violet {background:#c0c; box-shadow:0 0 15px #f0f;}
+  
+  .buttons {display:flex; justify-content:space-around; margin:10px 0;}
+  .btn {padding:6px 12px; border:none; border-radius:6px; cursor:pointer; font-size:13px; font-weight:bold;}
+  .hide {background:#444; color:#fff;}
+  .exit {background:#f33; color:#fff;}
+  
+  .telegram {
+    background: linear-gradient(45deg, #0088cc, #00aaff);
+    color: #fff; padding: 9px; border-radius: 8px;
+    display: block; margin: 8px auto 10px; text-decoration: none;
+    font-size: 13px; font-weight: bold; box-shadow: 0 0 10px rgba(0,136,204,0.6);
+  }
+
+  /* লগইন ফর্ম */
+  .login-form {
+    margin: 12px 0;
+  }
+  .login-form input {
+    width: 80%;
+    padding: 8px;
+    margin: 8px auto;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 13px;
+    display: block;
+  }
+  .login-form button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #0ff;
+    color: #000;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 8px auto;
+    display: block;
+  }
+  .login-form button:hover {
+    background: #00cccc;
+  }
+  .error {
+    color: #ff3333;
+    font-size: 12px;
+    margin: 6px 0;
+  }
+
+  /* টিক চিহ্ন (✓) */
+  .toggleBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 255, 255, 0.8);
+    color: #000;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: move;
+    z-index: 9998;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.9);
+    user-select: none;
+    pointer-events: auto;
+    display: none; /* প্রথমে লুকানো */
+  }
+    </style>
+    <style>
+      <br>#decrypt-panel{<br>  position:fixed; right:16px; top:16px; width:680px; max-height:84vh; z-index:2147483647;<br>  background: #0b0b0b; color:#eee; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.6);<br>  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;<br>  font-size:13px; overflow:hidden;<br>  border: 1px solid rgba(255,255,255,0.06);<br>}<br>#decrypt-panel .head{ padding:10px 12px; display:flex; gap:8px; align-items:center; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0)); }<br>#decrypt-panel .title{ font-weight:600; font-size:13px; }<br>#decrypt-panel .btn{ margin-left:auto; display:inline-flex; gap:8px; }<br>#decrypt-panel button{ background:#111; color:#ddd; border:1px solid rgba(255,255,255,0.04); padding:6px 8px; border-radius:6px; cursor:pointer; }<br>#decrypt-panel button:hover{ filter:brightness(1.2); }<br>#decrypt-panel .body{ padding:10px; display:flex; gap:8px; height:calc(84vh - 100px); }<br>#decrypt-panel textarea{ width:100%; height:100%; background:#071017; color:#dfeffb; border-radius:8px; border:1px solid rgba(255,255,255,0.03); padding:12px; font-family: monospace; font-size:12px; resize: none; overflow:auto; }<br>#decrypt-panel .rightcol{ width:220px; display:flex; flex-direction:column; gap:8px; }<br>#decrypt-panel .hint{ font-size:12px; color:#a9b6c2; padding:6px; background:rgba(255,255,255,0.01); border-radius:6px; }<br>#decrypt-panel .small{ font-size:12px; color:#9fb0ba;}<br>#decrypt-panel .footer{ padding:10px; display:flex; gap:8px; align-items:center; justify-content:flex-end; background:linear-gradient(180deg, rgba(255,255,255,0.00), rgba(255,255,255,0.01)); }<br>#decrypt-panel .close{ margin-right:auto; color:#bbb; cursor:pointer; font-size:12px; }<br>
+    </style>
+  </head>
+  <body>
+    <iframe src="https://dkwin9.com/#/register?invitationCode=44311995514" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups">
+    </iframe>
+    <!-- সিগন্যাল বক্স -->
+    <div class="signalBox" id="signalBox">
+      <div class="header">
+         [4X]™ COMMUNITY
+      </div>
+      <div class="subheader">
+        WINGO 30S VIP MOD BY [4X]™
+      </div>
+      <div class="login-form" id="loginForm">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="login()">
+          Login
+        </button>
+        <div class="error" id="errorMsg">
+        </div>
+      </div>
+      <div id="mainContent" style="display: none;">
+        <div class="clock">
+          Time:
+          <span id="clock">
+            --:--:--
+          </span>
+        </div>
+        <div class="remaining">
+          Remaining:
+          <span id="timer">
+            --s
+          </span>
+        </div>
+        <div class="result">
+          <span class="result-text">
+            Result:
+          </span>
+          <span id="signal" class="signal">
+            -
+          </span>
+        </div>
+        <div id="numberBox" class="number-box">
+          -
+        </div>
+      </div>
+      <a href="https://t.me/+Qcshm2ADqGg1ZjJl" class="telegram" target="_blank">
+        Join Telegram
+      </a>
+      <div class="buttons">
+        <button class="btn hide" id="hideBtn">
+          HIDE
+        </button>
+        <button class="btn exit" id="exitBtn">
+          EXIT
+        </button>
+      </div>
+    </div>
+    <!-- টিক চিহ্ন (✓) -->
+    <div class="toggleBtn" id="toggleBtn">
+      ☘️
+    </div>
+    <script>
+      // রিয়েল-টাইম ক্লক
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+}
+
+// ২টা ভিন্ন সংখ্যা
+function getTwoDifferentNumbers(min, max) {
+  let num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+  let num2;
+  do {
+    num2 = Math.floor(Math.random() * (max - min + 1)) + min;
+  } while (num2 === num1);
+  return [num1, num2];
+}
+
+// রিমেইনিং টাইম + BIG/SMALL + ২টা সংখ্যা
+let lastGameStart = null;
+
+function updateTimerAndSignal() {
+  const now = new Date();
+  const seconds = now.getSeconds();
+
+  let gameStart, remaining;
+  if (seconds < 30) {
+    gameStart = 0;
+    remaining = 29 - seconds;
+  } else {
+    gameStart = 30;
+    remaining = 59 - seconds;
+  }
+
+  document.getElementById('timer').textContent = remaining + 's';
+
+  const currentGameKey = `${now.getMinutes()}:${gameStart}`;
+  if (currentGameKey !== lastGameStart) {
+    lastGameStart = currentGameKey;
+
+    const isBig = Math.random() < 0.5 ? false : true;
+    const signal = isBig ? 'BIG' : 'SMALL';
+
+    const signalEl = document.getElementById('signal');
+    signalEl.textContent = signal;
+    signalEl.className = 'signal ' + signal;
+
+    let numbers = isBig ? getTwoDifferentNumbers(5, 9) : getTwoDifferentNumbers(0, 4);
+    const nb = document.getElementById('numberBox');
+    nb.textContent = `${numbers[0]} ${numbers[1]}`;
+
+    const colors = ['green', 'red', 'violet'];
+    nb.className = 'number-box ' + colors[Math.floor(Math.random() * 3)];
+  }
+}
+
+// লগইন ফাংশন
+function login() {
+  const password = document.getElementById('password').value;
+  const errorMsg = document.getElementById('errorMsg');
+  const loginForm = document.getElementById('loginForm');
+  const mainContent = document.getElementById('mainContent');
+
+  if (password === 'sadinvip-px') {
+    loginForm.style.display = 'none';
+    mainContent.style.display = 'block';
+    setInterval(() => {
+      updateClock();
+      updateTimerAndSignal();
+    }, 1000);
+    updateClock();
+    updateTimerAndSignal();
+  } else {
+    errorMsg.textContent = 'Incorrect Password';
+  }
+}
+
+// ড্র্যাগ ফাংশন
+function makeDraggable(element) {
+  let dragging = false, sx, sy;
+  element.addEventListener('touchstart', e => {
+    dragging = true;
+    const t = e.touches[0];
+    sx = t.clientX - element.offsetLeft;
+    sy = t.clientY - element.offsetTop;
+    e.stopPropagation();
+  }, { passive: false });
+
+  element.addEventListener('touchmove', e => {
+    if (dragging) {
+      const t = e.touches[0];
+      element.style.left = (t.clientX - sx) + 'px';
+      element.style.top = (t.clientY - sy) + 'px';
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  element.addEventListener('touchend', () => dragging = false);
+
+  element.addEventListener('mousedown', e => {
+    dragging = true;
+    sx = e.clientX - element.offsetLeft;
+    sy = e.clientY - element.offsetTop;
+    e.stopPropagation();
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (dragging) {
+      element.style.left = (e.clientX - sx) + 'px';
+      element.style.top = (e.clientY - sy) + 'px';
+    }
+  });
+
+  document.addEventListener('mouseup', () => dragging = false);
+}
+
+// সিগন্যাল বক্স এবং টিক চিহ্ন ড্র্যাগ
+makeDraggable(document.getElementById('signalBox'));
+makeDraggable(document.getElementById('toggleBtn'));
+
+// HIDE / EXIT / SHOW
+const signalBox = document.getElementById('signalBox');
+const toggleBtn = document.getElementById('toggleBtn');
+
+document.getElementById('hideBtn').onclick = e => {
+  signalBox.style.display = 'none';
+  toggleBtn.style.display = 'flex';
+  e.stopPropagation();
+};
+
+document.getElementById('exitBtn').onclick = e => {
+  signalBox.style.display = 'none';
+  toggleBtn.style.display = 'none';
+  e.stopPropagation();
+};
+
+toggleBtn.onclick = e => {
+  signalBox.style.display = 'block';
+  toggleBtn.style.display = 'none';
+  e.stopPropagation();
+};
+    </script>
+    opPropagation();
+};
+    <script>
+      /* HTML Decrypt / Pretty-print UI
+   Paste this script at the end of your HTML file (before </body>).
+   It reads the current page HTML, attempts safe, non-exec decoding
+   (base64, hex escapes, \xNN, URL decode), pretty-prints, and allows download.
+   NOTE: This never uses eval() or executes page scripts for decoding.
+*/
+
+(function(){
+  // --- small utilities ---
+  function download(filename, text){
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], {type:'text/html'}));
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+  }
+
+  function escapeHtml(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // Convert "\xNN" escapes to characters
+  function unescapeHexSlashes(s){
+    return s.replace(/\\x([0-9A-Fa-f]{2})/g, function(_,hex){
+      return String.fromCharCode(parseInt(hex,16));
+    });
+  }
+
+  // Convert "\uNNNN" escapes to characters
+  function unescapeUnicodeSlashes(s){
+    return s.replace(/\\u([0-9A-Fa-f]{4})/g, function(_,hex){
+      return String.fromCharCode(parseInt(hex,16));
+    });
+  }
+
+  // Convert sequences like '&#xNN;' or '&#DDD;'
+  function decodeHtmlEntities(s){
+    const txt = document.createElement('textarea');
+    txt.innerHTML = s;
+    return txt.value;
+  }
+
+  // Heuristic: find long base64-like substrings and attempt to decode them
+  function tryDecodeBase64Candidates(s){
+    return s.replace(/([A-Za-z0-9+/]{40,}={0,2})/g, function(full, candidate){
+      // quick validation (only letters+digits+/ and proper padding)
+      if(!/^[A-Za-z0-9+/]+={0,2}$/.test(candidate)) return full;
+      try {
+        // atob can throw for invalid base64 - wrap in try/catch
+        const decoded = atob(candidate);
+        // if decoded looks like text (no long stretches of nulls), replace with readable text
+        const printableRatio = (decoded.match(/[\x20-\x7E]/g)||[]).length / Math.max(1, decoded.length);
+        if(printableRatio > 0.5 && decoded.length > 20){
+          return '\n/*----- base64 decoded start -----*/\n' + decoded + '\n/*----- base64 decoded end -----*/\n';
+        }
+      } catch(e){}
+      return full;
+    });
+  }
+
+  // URL decode candidate segments
+  function tryURLDecodeCandidates(s){
+    return s.replace(/(https?:\/\/[^\s'"]+|%[0-9A-Fa-f]{2}[%0-9A-Fa-f]*)/g, function(full){
+      try {
+        const dec = decodeURIComponent(full);
+        if(dec && dec !== full && dec.length>10) return '\n/* url-decoded */\n' + dec + '\n/* end url-decoded */\n';
+      } catch(e){}
+      return full;
+    });
+  }
+
+  // Very simple HTML pretty-printing by walking DOM and indenting.
+  // It's not a full formatter for every edge-case HTML, but works well for typical pages.
+  function prettyPrintHTML(rawHtml){
+    // Try to parse into DOM then serialize with indentation
+    try {
+      const doc = new DOMParser().parseFromString(rawHtml, 'text/html');
+      function outer(node, indent){
+        indent = indent || '';
+        if(node.nodeType === Node.TEXT_NODE){
+          const t = node.nodeValue.trim();
+          if(!t) return '';
+          return indent + t + '\n';
+        }
+        if(node.nodeType === Node.COMMENT_NODE){
+          return indent + '<!--' + node.nodeValue + '-->\n';
+        }
+        if(node.nodeType !== Node.ELEMENT_NODE){
+          return '';
+        }
+        let s = indent + '<' + node.tagName.toLowerCase();
+        // attributes
+        for(const attr of node.attributes || []){
+          s += ' ' + attr.name + '="' + attr.value.replace(/"/g,'&quot;') + '"';
+        }
+        s += '>';
+        // void elements
+        const voids = {'area':1,'base':1,'br':1,'col':1,'embed':1,'hr':1,'img':1,'input':1,'link':1,'meta':1,'param':1,'source':1,'track':1,'wbr':1};
+        if(voids[node.tagName.toLowerCase()]){
+          return s + '\n';
+        }
+        s += '\n';
+        for(const child of node.childNodes){
+          s += outer(child, indent + '  ');
+        }
+        s += indent + '</' + node.tagName.toLowerCase() + '>\n';
+        return s;
+      }
+      let out = '<!DOCTYPE html>\n' + outer(doc.documentElement, '');
+      return out;
+    } catch(e){
+      // Fallback: return escaped rawHtml
+      return rawHtml;
+    }
+  }
+
+  // --- build UI ---
+  const panel = document.createElement('div');
+  panel.id = 'decrypt-panel';
+  const css = `
+#decrypt-panel{
+  position:fixed; right:16px; top:16px; width:680px; max-height:84vh; z-index:2147483647;
+  background: #0b0b0b; color:#eee; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.6);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-size:13px; overflow:hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+#decrypt-panel .head{ padding:10px 12px; display:flex; gap:8px; align-items:center; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0)); }
+#decrypt-panel .title{ font-weight:600; font-size:13px; }
+#decrypt-panel .btn{ margin-left:auto; display:inline-flex; gap:8px; }
+#decrypt-panel button{ background:#111; color:#ddd; border:1px solid rgba(255,255,255,0.04); padding:6px 8px; border-radius:6px; cursor:pointer; }
+#decrypt-panel button:hover{ filter:brightness(1.2); }
+#decrypt-panel .body{ padding:10px; display:flex; gap:8px; height:calc(84vh - 100px); }
+#decrypt-panel textarea{ width:100%; height:100%; background:#071017; color:#dfeffb; border-radius:8px; border:1px solid rgba(255,255,255,0.03); padding:12px; font-family: monospace; font-size:12px; resize: none; overflow:auto; }
+#decrypt-panel .rightcol{ width:220px; display:flex; flex-direction:column; gap:8px; }
+#decrypt-panel .hint{ font-size:12px; color:#a9b6c2; padding:6px; background:rgba(255,255,255,0.01); border-radius:6px; }
+#decrypt-panel .small{ font-size:12px; color:#9fb0ba;}
+#decrypt-panel .footer{ padding:10px; display:flex; gap:8px; align-items:center; justify-content:flex-end; background:linear-gradient(180deg, rgba(255,255,255,0.00), rgba(255,255,255,0.01)); }
+#decrypt-panel .close{ margin-right:auto; color:#bbb; cursor:pointer; font-size:12px; }
+`;
+  const style = document.createElement('style');
+  style.innerText = css;
+  document.head.appendChild(style);
+
+  panel.innerHTML = `
+    <div class="head">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.9"><path d="M12 2L2 7v7c0 5 4 8 10 8s10-3 10-8V7l-10-5z" stroke="#7de0ff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="title">HTML Decrypt & Pretty View</div>
+      <div class="btn">
+        <button id="dp-trydecode" title="Try safe decode heuristics">Try decode</button>
+        <button id="dp-pretty" title="Pretty-print current HTML">Pretty</button>
+        <button id="dp-copy" title="Copy to clipboard">Copy</button>
+        <button id="dp-download" title="Download as .html">Download</button>
+        <button id="dp-close" title="Close">✕</button>
+      </div>
+    </div>
+    <div class="body">
+      <textarea id="dp-text" spellcheck="false"></textarea>
+      <div class="rightcol">
+        <div class="hint"><strong>Note:</strong> This works on the HTML the browser received. It will not break server-side or key-based encryption.</div>
+        <div class="small">Heuristics included:</div>
+        <div class="small">• Base64 candidate decode (safe; no eval).<br>• \\xNN and \\uNNNN unescape.<br>• URL decode for encoded segments.<br>• HTML entity decode.</div>
+        <div class="small">If content is heavily obfuscated (packer/eval), full recovery may need manual analysis.</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="close small" id="dp-minimize">Minimize</div>
+      <div class="small">Page Title: <span id="dp-pagetitle"></span></div>
+    </div>
+  `;
+  document.body.appendChild(panel);
+
+  const ta = panel.querySelector('#dp-text');
+  const btnPretty = panel.querySelector('#dp-pretty');
+  const btnDecode = panel.querySelector('#dp-trydecode');
+  const btnDownload = panel.querySelector('#dp-download');
+  const btnCopy = panel.querySelector('#dp-copy');
+  const btnClose = panel.querySelector('#dp-close');
+  const btnMin = panel.querySelector('#dp-minimize');
+  const titleSpan = panel.querySelector('#dp-pagetitle');
+
+  
